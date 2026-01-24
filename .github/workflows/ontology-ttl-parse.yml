@@ -1,0 +1,49 @@
+name: Ontology TTL Parse Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  parse-ttl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install RDFLib
+        run: pip install rdflib==7.0.0
+
+      - name: Parse all Turtle files
+        run: |
+          python - <<'PY'
+          import glob, sys
+          from rdflib import Graph
+
+          ttl_files = sorted(set(glob.glob("**/*.ttl", recursive=True)))
+          if not ttl_files:
+            print("No .ttl files found. Nothing to validate.")
+            sys.exit(0)
+
+          failed = []
+          for f in ttl_files:
+            g = Graph()
+            try:
+              g.parse(f, format="turtle")
+              print(f"OK: {f} ({len(g)} triples)")
+            except Exception as e:
+              failed.append((f, str(e)))
+
+          if failed:
+            print("\nFAILED Turtle parse:")
+            for f, err in failed:
+              print(f"- {f}: {err}")
+            sys.exit(1)
+
+          print("\nAll Turtle files parsed successfully.")
+          PY
