@@ -1,0 +1,136 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix alliance: <https://example.org/ontology/alliance-rfi#> .
+
+#################################################################
+# Ontology header
+#################################################################
+
+alliance:Ontology a owl:Ontology ;
+  rdfs:label "Alliance RFI Response Ontology" ;
+  rdfs:comment "Document-scoped ontology derived solely from the GTS–Energration Alliance RFI response. Models roles, capabilities, constraints, and authority without inference." .
+
+#################################################################
+# Core document structure
+#################################################################
+
+alliance:Document a owl:Class .
+alliance:Section a owl:Class .
+alliance:Question a owl:Class .
+alliance:Answer a owl:Class .
+
+#################################################################
+# Actors
+#################################################################
+
+alliance:Organization a owl:Class .
+alliance:Alliance a owl:Class ;
+  rdfs:subClassOf alliance:Organization .
+
+alliance:Role a owl:Class .
+
+#################################################################
+# Proposal content
+#################################################################
+
+alliance:Offering a owl:Class .
+alliance:Capability a owl:Class .
+alliance:Constraint a owl:Class .
+
+#################################################################
+# Claim model (truth-preserving)
+#################################################################
+
+alliance:Claim a owl:Class ;
+  rdfs:comment "A statement asserted by the RFI response. Claims are not treated as externally true." .
+
+#################################################################
+# Object properties
+#################################################################
+
+alliance:hasSection a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Section .
+
+alliance:hasQuestion a owl:ObjectProperty ;
+  rdfs:domain alliance:Section ;
+  rdfs:range alliance:Question .
+
+alliance:hasAnswer a owl:ObjectProperty ;
+  rdfs:domain alliance:Question ;
+  rdfs:range alliance:Answer .
+
+alliance:proposesOffering a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Offering .
+
+alliance:includesCapability a owl:ObjectProperty ;
+  rdfs:domain alliance:Offering ;
+  rdfs:range alliance:Capability .
+
+alliance:mentionsConstraint a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Constraint .
+
+alliance:hasClaim a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Claim .
+
+alliance:claimAbout a owl:ObjectProperty ;
+  rdfs:domain alliance:Claim ;
+  rdfs:range owl:Thing .
+
+alliance:claimSourceSection a owl:ObjectProperty ;
+  rdfs:domain alliance:Claim ;
+  rdfs:range alliance:Section .
+
+alliance:claimSourceQuestion a owl:ObjectProperty ;
+  rdfs:domain alliance:Claim ;
+  rdfs:range alliance:Question .
+
+#################################################################
+# Data properties
+#################################################################
+
+alliance:title a owl:DatatypeProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range xsd:string .
+
+alliance:sectionLabel a owl:DatatypeProperty ;
+  rdfs:domain alliance:Section ;
+  rdfs:range xsd:string .
+
+alliance:questionId a owl:DatatypeProperty ;
+  rdfs:domain alliance:Question ;
+  rdfs:range xsd:string .
+
+alliance:questionText a owl:DatatypeProperty ;
+  rdfs:domain alliance:Question ;
+  rdfs:range xsd:string .
+
+alliance:answerText a owl:DatatypeProperty ;
+  rdfs:domain alliance:Answer ;
+  rdfs:range xsd:string .
+
+alliance:claimText a owl:DatatypeProperty ;
+  rdfs:domain alliance:Claim ;
+  rdfs:range xsd:string .
+
+#################################################################
+# Seeded document and actors (from response)
+#################################################################
+
+alliance:RFI_Response a alliance:Document ;
+  alliance:title "GTS–Energration Alliance RFI Response" .
+
+alliance:GTS a alliance:Organization ;
+  rdfs:label "Global Technical Systems (GTS)" .
+
+alliance:Energration a alliance:Organization ;
+  rdfs:label "Energration, LLC" .
+
+alliance:GTS_Energration_Alliance a alliance:Alliance ;
+  rdfs:label "GTS–Energration Alliance" .

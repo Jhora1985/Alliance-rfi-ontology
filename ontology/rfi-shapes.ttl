@@ -1,0 +1,26 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix alliance: <https://example.org/ontology/alliance-rfi#> .
+
+#################################################################
+# Offering guardrail
+#################################################################
+
+alliance:OfferingShape a sh:NodeShape ;
+  sh:targetClass alliance:Offering ;
+  sh:property [
+    sh:path alliance:includesCapability ;
+    sh:minCount 1 ;
+    sh:message "An Offering must include at least one Capability." ;
+  ] .
+
+#################################################################
+# Claim guardrail
+#################################################################
+
+alliance:ClaimShape a sh:NodeShape ;
+  sh:targetClass alliance:Claim ;
+  sh:property [
+    sh:path alliance:claimText ;
+    sh:minCount 1 ;
+    sh:message "Each Claim must preserve its original text." ;
+  ] .

@@ -1,0 +1,29 @@
+@prefix alliance: <https://example.org/ontology/alliance-rfi#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+#################################################################
+# Sections
+#################################################################
+
+alliance:Sec_ExecutiveSummary a alliance:Section ;
+  alliance:sectionLabel "Executive Summary" .
+
+#################################################################
+# Core Offering
+#################################################################
+
+alliance:CoreOffering a alliance:Offering ;
+  rdfs:label "Core Offering (as described in the RFI response)" .
+
+alliance:RFI_Response alliance:proposesOffering alliance:CoreOffering .
+
+#################################################################
+# Example claim (replace/add as you extract real text)
+#################################################################
+
+alliance:Claim_PrivateFinance a alliance:Claim ;
+  alliance:claimText "The Alliance proposes to privately finance and develop secure data center infrastructure." ;
+  alliance:claimAbout alliance:CoreOffering ;
+  alliance:claimSourceSection alliance:Sec_ExecutiveSummary .
+
+alliance:RFI_Response alliance:hasClaim alliance:Claim_PrivateFinance .
