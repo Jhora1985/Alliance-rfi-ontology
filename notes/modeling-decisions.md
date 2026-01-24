@@ -1,0 +1,1 @@
+Initial commit intentionally limited to document structure and a claim-based model, pending validation that this ontology direction matches expectations before populating question- and answer-level content.
