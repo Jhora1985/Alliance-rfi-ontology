@@ -27,3 +27,83 @@ alliance:Claim_PrivateFinance a alliance:Claim ;
   alliance:claimSourceSection alliance:Sec_ExecutiveSummary .
 
 alliance:RFI_Response alliance:hasClaim alliance:Claim_PrivateFinance .
+
+#################################################################
+# Stakeholders, perspectives, concerns (instances)
+#################################################################
+
+# Stakeholders (document-scoped)
+alliance:Stakeholder_Alliance a alliance:Stakeholder ;
+  rdfs:label "GTS–Energration Alliance (Stakeholder)" .
+
+alliance:Stakeholder_DOE_NNSA a alliance:Stakeholder ;
+  rdfs:label "DOE/NNSA (Stakeholder)" .
+
+alliance:Stakeholder_RFI_Reviewers a alliance:Stakeholder ;
+  rdfs:label "RFI Reviewers / Evaluators (Stakeholder)" .
+
+# Perspectives
+alliance:Perspective_DeliveryFeasibility a alliance:Perspective ;
+  rdfs:label "Delivery & feasibility perspective" .
+
+alliance:Perspective_GovernanceAuthority a alliance:Perspective ;
+  rdfs:label "Governance & authority perspective" .
+
+alliance:Perspective_SecurityAccreditation a alliance:Perspective ;
+  rdfs:label "Security & accreditation perspective" .
+
+alliance:Perspective_ClarityScopeControl a alliance:Perspective ;
+  rdfs:label "Clarity & scope-control perspective" .
+
+# Concerns
+alliance:Concern_Schedule a alliance:Concern ; rdfs:label "Schedule" .
+alliance:Concern_Cost a alliance:Concern ; rdfs:label "Cost" .
+alliance:Concern_Compliance a alliance:Concern ; rdfs:label "Compliance" .
+alliance:Concern_AuthorityBoundaries a alliance:Concern ; rdfs:label "Authority boundaries" .
+alliance:Concern_Accreditation a alliance:Concern ; rdfs:label "Accreditation" .
+alliance:Concern_RiskReduction a alliance:Concern ; rdfs:label "Risk reduction" .
+alliance:Concern_NoOverInterpretation a alliance:Concern ; rdfs:label "Prevent over-interpretation" .
+
+# Link stakeholders -> perspectives -> concerns
+alliance:Stakeholder_Alliance alliance:hasPerspective alliance:Perspective_DeliveryFeasibility .
+alliance:Perspective_DeliveryFeasibility alliance:hasConcern alliance:Concern_Schedule, alliance:Concern_Cost .
+
+alliance:Stakeholder_DOE_NNSA alliance:hasPerspective alliance:Perspective_GovernanceAuthority, alliance:Perspective_SecurityAccreditation .
+alliance:Perspective_GovernanceAuthority alliance:hasConcern alliance:Concern_AuthorityBoundaries, alliance:Concern_Compliance .
+alliance:Perspective_SecurityAccreditation alliance:hasConcern alliance:Concern_Accreditation, alliance:Concern_RiskReduction .
+
+alliance:Stakeholder_RFI_Reviewers alliance:hasPerspective alliance:Perspective_ClarityScopeControl .
+alliance:Perspective_ClarityScopeControl alliance:hasConcern alliance:Concern_NoOverInterpretation .
+
+# Attach stakeholders to the document
+alliance:RFI_Response alliance:hasStakeholder
+  alliance:Stakeholder_Alliance,
+  alliance:Stakeholder_DOE_NNSA,
+  alliance:Stakeholder_RFI_Reviewers .
+
+#################################################################
+# Concept clusters (instances)
+#################################################################
+
+alliance:Cluster_GovernanceAuthority a alliance:ConceptCluster ;
+  rdfs:label "Governance / Authority" .
+
+alliance:Cluster_SecurityAccreditation a alliance:ConceptCluster ;
+  rdfs:label "Security / Accreditation" .
+
+alliance:Cluster_OfferingsCapabilities a alliance:ConceptCluster ;
+  rdfs:label "Offerings / Capabilities" .
+
+alliance:Cluster_ConstraintsConditions a alliance:ConceptCluster ;
+  rdfs:label "Constraints / Conditions" .
+
+# Attach clusters to the document
+alliance:RFI_Response alliance:hasCluster
+  alliance:Cluster_GovernanceAuthority,
+  alliance:Cluster_SecurityAccreditation,
+  alliance:Cluster_OfferingsCapabilities,
+  alliance:Cluster_ConstraintsConditions .
+
+# Cluster membership (use lightweight anchors you already have)
+alliance:Cluster_OfferingsCapabilities alliance:clusterMember alliance:CoreOffering .
+alliance:Cluster_ConstraintsConditions alliance:clusterMember alliance:Claim_PrivateFinance .

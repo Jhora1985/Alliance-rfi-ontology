@@ -134,3 +134,63 @@ alliance:Energration a alliance:Organization ;
 
 alliance:GTS_Energration_Alliance a alliance:Alliance ;
   rdfs:label "GTS–Energration Alliance" .
+
+#################################################################
+# Stakeholders & perspectives (Lou additions)
+#################################################################
+
+alliance:Stakeholder a owl:Class .
+alliance:Perspective a owl:Class .
+alliance:Concern a owl:Class .
+
+alliance:hasStakeholder a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Stakeholder .
+
+alliance:hasPerspective a owl:ObjectProperty ;
+  rdfs:domain alliance:Stakeholder ;
+  rdfs:range alliance:Perspective .
+
+alliance:hasConcern a owl:ObjectProperty ;
+  rdfs:domain alliance:Perspective ;
+  rdfs:range alliance:Concern .
+
+#################################################################
+# Concept clusters (Lou: "model those concept clusters")
+#################################################################
+
+alliance:ConceptCluster a owl:Class .
+
+alliance:hasCluster a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:ConceptCluster .
+
+alliance:clusterMember a owl:ObjectProperty ;
+  rdfs:domain alliance:ConceptCluster ;
+  rdfs:range owl:Thing .
+
+#################################################################
+# Knowledge state & uncertainty (Lou: risks and unknowns)
+#################################################################
+
+alliance:KnowledgeItem a owl:Class .
+alliance:Known a owl:Class ; rdfs:subClassOf alliance:KnowledgeItem .
+alliance:Assumption a owl:Class ; rdfs:subClassOf alliance:KnowledgeItem .
+alliance:Unknown a owl:Class ; rdfs:subClassOf alliance:KnowledgeItem .
+alliance:Risk a owl:Class ; rdfs:subClassOf alliance:KnowledgeItem .
+
+alliance:hasKnown a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Known .
+
+alliance:hasAssumption a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Assumption .
+
+alliance:hasUnknown a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Unknown .
+
+alliance:hasRisk a owl:ObjectProperty ;
+  rdfs:domain alliance:Document ;
+  rdfs:range alliance:Risk .
